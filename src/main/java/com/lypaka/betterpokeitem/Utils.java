@@ -1,7 +1,9 @@
 package com.lypaka.betterpokeitem;
 
+import com.lypaka.catalystterapokemon.Helpers.NBTHelpers;
 import com.lypaka.lypakautils.FancyText;
 import com.lypaka.lypakautils.MiscHandlers.ItemStackBuilder;
+import com.lypaka.pokemonmythology.Handlers.MythicHandler;
 import com.pixelmonmod.pixelmon.api.pokemon.Nature;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.pokemon.PokemonBuilder;
@@ -10,6 +12,7 @@ import com.pixelmonmod.pixelmon.api.pokemon.species.gender.Gender;
 import com.pixelmonmod.pixelmon.battles.attacks.Attack;
 import com.pixelmonmod.pixelmon.enums.EnumGrowth;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.ModList;
 
 import java.util.List;
 import java.util.Map;
@@ -182,6 +185,39 @@ public class Utils {
                             if (!value.equalsIgnoreCase("none")) {
 
                                 pokemon.setMintNature(Nature.natureFromString(value));
+
+                            }
+                            break;
+
+                        case "mythic":
+                            if (ModList.get().isLoaded("pokemonmythology")) {
+
+                                if (!value.isEmpty()) {
+
+                                    MythicHandler.setMythic(pokemon, MythicHandler.getFromName(value), false);
+
+                                } else if (!value.equalsIgnoreCase("")) {
+
+                                    MythicHandler.setMythic(pokemon, MythicHandler.getFromName(value), false);
+
+                                }
+
+                            }
+                            break;
+
+                        case "teratype":
+                        case "tera type":
+                            if (ModList.get().isLoaded("catalystterapokemon")) {
+
+                                if (!value.isEmpty()) {
+
+                                    NBTHelpers.setTeraType(pokemon, value, false);
+
+                                } else if (!value.equalsIgnoreCase("")) {
+
+                                    NBTHelpers.setTeraType(pokemon, value, false);
+
+                                }
 
                             }
                             break;

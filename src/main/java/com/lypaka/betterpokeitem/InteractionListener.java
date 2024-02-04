@@ -26,13 +26,11 @@ public class InteractionListener {
         if (event.getSide() == LogicalSide.CLIENT) return;
         if (event.getHand() == Hand.OFF_HAND) return;
 
-        System.out.println("hi");
         ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
         ItemStack item = event.getItemStack();
         if (item.getItem().getRegistryName().toString().equalsIgnoreCase("pixelmon:pixelmon_sprite")) {
 
-            if (!player.getHeldItem(Hand.MAIN_HAND).getDisplayName().getString().contains("PokeItem")) return;
-            System.out.println("hi 2");
+            if (!event.getItemStack().getOrCreateTag().contains("IsPokeItem")) return;
             ListNBT lore = item.getOrCreateChildTag("display").getList("Lore", 8);
             if (lore.toString().contains("Locked")) {
 

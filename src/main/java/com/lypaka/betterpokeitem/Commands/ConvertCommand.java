@@ -1,8 +1,10 @@
 package com.lypaka.betterpokeitem.Commands;
 
 import com.lypaka.betterpokeitem.ConfigGetters;
+import com.lypaka.catalystterapokemon.Helpers.NBTHelpers;
 import com.lypaka.lypakautils.FancyText;
 import com.lypaka.lypakautils.MiscHandlers.PermissionHandler;
+import com.lypaka.pokemonmythology.Handlers.MythicHandler;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -15,10 +17,10 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.fml.ModList;
 
 public class ConvertCommand {
 
@@ -132,6 +134,23 @@ public class ConvertCommand {
                                                                                     String neededEXP = String.valueOf(pokemon.getExperienceToLevelUp());
                                                                                     String dynamaxLevel = String.valueOf(pokemon.getDynamaxLevel());
 
+                                                                                    String mythic = "";
+                                                                                    if (ModList.get().isLoaded("pokemonmythology")) {
+
+                                                                                        if (MythicHandler.isPokemonMythic(pokemon)) {
+
+                                                                                            mythic = MythicHandler.getMythicFromPokemon(pokemon).getName();
+
+                                                                                        }
+
+                                                                                    }
+                                                                                    String teraType = "";
+                                                                                    if (ModList.get().isLoaded("catalystterapokemon")) {
+
+                                                                                        teraType = NBTHelpers.getTeraType(pokemon);
+
+                                                                                    }
+
                                                                                     ListNBT lore = new ListNBT();
                                                                                     for (String s : ConfigGetters.itemStackLore) {
 
@@ -161,6 +180,8 @@ public class ConvertCommand {
                                                                                                 .replace("%neededEXP%", neededEXP)
                                                                                                 .replace("%mintNature%", mintNature)
                                                                                                 .replace("%dynamaxLevel%", dynamaxLevel)
+                                                                                                .replace("%mythic%", mythic)
+                                                                                                .replace("%teratype%", teraType)
                                                                                         ))));
 
                                                                                     }
@@ -172,8 +193,8 @@ public class ConvertCommand {
 
                                                                                     }
 
+                                                                                    sprite.getOrCreateTag().putBoolean("IsPokeItem", true);
                                                                                     sprite.getOrCreateChildTag("display").put("Lore", lore);
-                                                                                    sprite.setDisplayName(FancyText.getFormattedText("&fPokeItem: " + pokemon.getSpecies().getName()));
                                                                                     player.addItemStackToInventory(sprite);
                                                                                     storage.set(slot, null);
                                                                                     player.sendMessage(FancyText.getFormattedText("&aSuccessfully itemized your " + pokemon.getLocalizedName() + "!"), player.getUniqueID());
@@ -202,7 +223,6 @@ public class ConvertCommand {
                                                                     }
 
                                                                     int slot = IntegerArgumentType.getInteger(c, "slot");
-                                                                    boolean lock = false;
                                                                     slot = slot - 1;
                                                                     PlayerPartyStorage storage = StorageProxy.getParty(player);
                                                                     if (storage.countAblePokemon() == 1) {
@@ -283,6 +303,23 @@ public class ConvertCommand {
                                                                     String neededEXP = String.valueOf(pokemon.getExperienceToLevelUp());
                                                                     String dynamaxLevel = String.valueOf(pokemon.getDynamaxLevel());
 
+                                                                    String mythic = "";
+                                                                    if (ModList.get().isLoaded("pokemonmythology")) {
+
+                                                                        if (MythicHandler.isPokemonMythic(pokemon)) {
+
+                                                                            mythic = MythicHandler.getMythicFromPokemon(pokemon).getName();
+
+                                                                        }
+
+                                                                    }
+                                                                    String teraType = "";
+                                                                    if (ModList.get().isLoaded("catalystterapokemon")) {
+
+                                                                        teraType = NBTHelpers.getTeraType(pokemon);
+
+                                                                    }
+
                                                                     ListNBT lore = new ListNBT();
                                                                     for (String s : ConfigGetters.itemStackLore) {
 
@@ -312,17 +349,13 @@ public class ConvertCommand {
                                                                                 .replace("%neededEXP%", neededEXP)
                                                                                 .replace("%mintNature%", mintNature)
                                                                                 .replace("%dynamaxLevel%", dynamaxLevel)
+                                                                                .replace("%mythic%", mythic)
+                                                                                .replace("%teratype%", teraType)
                                                                         ))));
 
                                                                     }
 
-                                                                    if (lock) {
-
-                                                                        lore.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(FancyText.getFormattedText(""))));
-                                                                        lore.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(FancyText.getFormattedText("&dLocked By: &e" + player.getName().getString() + " / " + player.getUniqueID()))));
-
-                                                                    }
-
+                                                                    sprite.getOrCreateTag().putBoolean("IsPokeItem", true);
                                                                     sprite.getOrCreateChildTag("display").put("Lore", lore);
                                                                     player.addItemStackToInventory(sprite);
                                                                     storage.set(slot, null);
