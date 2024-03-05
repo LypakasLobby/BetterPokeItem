@@ -9,6 +9,7 @@ import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.pokemon.PokemonBuilder;
 import com.pixelmonmod.pixelmon.api.pokemon.ability.AbilityRegistry;
 import com.pixelmonmod.pixelmon.api.pokemon.species.gender.Gender;
+import com.pixelmonmod.pixelmon.api.registries.PixelmonSpecies;
 import com.pixelmonmod.pixelmon.battles.attacks.Attack;
 import com.pixelmonmod.pixelmon.enums.EnumGrowth;
 import net.minecraft.item.ItemStack;
@@ -23,7 +24,7 @@ public class Utils {
     public static Pokemon rebuildPokemon (String species, List<String> specs) {
 
         Pokemon pokemon = PokemonBuilder.builder()
-                .species(species)
+                .species(species.replace("pixelmon.", ""))
                 .build();
 
         for (String s : specs) {

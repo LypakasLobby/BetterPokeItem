@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Specification-Title: betterpokeitem
+Specification-Version: 1
+Implementation-Title: betterpokeitem
+Implementation-Version: 1.16.5-1.1.1-Maybe1
+Implementation-Timestamp: 2024-03-04T21:14:26-0600
+
