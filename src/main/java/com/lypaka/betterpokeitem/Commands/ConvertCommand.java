@@ -83,7 +83,9 @@ public class ConvertCommand {
                                                                                     }
 
                                                                                     ItemStack sprite = SpriteItemHelper.getPhoto(pokemon);
-                                                                                    sprite.setDisplayName(FancyText.getFormattedText("&e" + pokemon.getLocalizedName()));
+                                                                                    String name = pokemon.getSpecies().getName().replace("pixelmon.", "");
+                                                                                    name = name.substring(0, 1).toUpperCase() + name.substring(1);
+                                                                                    sprite.setDisplayName(FancyText.getFormattedText("&e" + name));
 
                                                                                     // pre-making Pokemon data, lol
                                                                                     Attack a1 = pokemon.getMoveset().get(0);
