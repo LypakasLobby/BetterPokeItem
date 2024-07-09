@@ -16,6 +16,7 @@ public class ConfigGetters {
 
     public static void load() throws ObjectMappingException {
 
+        boolean save = false;
         commandPermission = BetterPokeItem.configManager.getConfigNode(0, "Command-Permission").getString();
         itemStackLore = BetterPokeItem.configManager.getConfigNode(0, "Lore").getList(TypeToken.of(String.class));
         pokemonBlacklist = BetterPokeItem.configManager.getConfigNode(0, "Pokemon-Blacklist").getList(TypeToken.of(String.class));
@@ -26,6 +27,7 @@ public class ConfigGetters {
 
         } else {
 
+            save = true;
             translationMap.put("Shiny", "Shiny");
             translationMap.put("Level", "Level");
             translationMap.put("Nature", "Nature");
@@ -49,6 +51,11 @@ public class ConfigGetters {
             translationMap.put("GMax", "GMax");
             translationMap.put("EXP", "EXP");
             BetterPokeItem.configManager.getConfigNode(0, "Translations").setValue(translationMap);
+
+        }
+
+        if (save) {
+
             BetterPokeItem.configManager.save();
 
         }

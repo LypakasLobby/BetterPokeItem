@@ -9,6 +9,7 @@ import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.pokemon.PokemonBuilder;
 import com.pixelmonmod.pixelmon.api.pokemon.ability.AbilityRegistry;
 import com.pixelmonmod.pixelmon.api.pokemon.species.gender.Gender;
+import com.pixelmonmod.pixelmon.api.pokemon.stats.extraStats.LakeTrioStats;
 import com.pixelmonmod.pixelmon.api.registries.PixelmonSpecies;
 import com.pixelmonmod.pixelmon.battles.attacks.Attack;
 import com.pixelmonmod.pixelmon.enums.EnumGrowth;
@@ -21,11 +22,301 @@ import java.util.UUID;
 
 public class Utils {
 
+    private static Pokemon rebuildPokemonWithStupidAssName (String species) {
+
+        species = species.replace("pixelmon.", "");
+        Pokemon pokemon = null;
+        switch (species.toLowerCase()) {
+
+            case "nidoranfemale":
+            case "nidoran♀":
+                pokemon = PokemonBuilder.builder()
+                        .species(29)
+                        .build();
+                break;
+
+            case "nidoranmale":
+            case "nidoran♂":
+                pokemon = PokemonBuilder.builder()
+                        .species(32)
+                        .build();
+                break;
+
+            case "farfetch'd":
+            case "farfetchd":
+                pokemon = PokemonBuilder.builder()
+                        .species(83)
+                        .build();
+                break;
+
+            case "mrmime":
+            case "mr.mime":
+            case "mr. mime":
+            case "mr mime":
+                pokemon = PokemonBuilder.builder()
+                        .species(122)
+                        .build();
+                break;
+
+            case "porygon2":
+                pokemon = PokemonBuilder.builder()
+                        .species(233)
+                        .build();
+                break;
+
+            case "mimejr.":
+            case "mimejr":
+            case "mime jr.":
+            case "mime jr":
+                pokemon = PokemonBuilder.builder()
+                        .species(439)
+                        .build();
+                break;
+
+            case "porygon-z":
+            case "porygon z":
+            case "porygonz":
+                pokemon = PokemonBuilder.builder()
+                        .species(474)
+                        .build();
+                break;
+
+            case "flabébé":
+            case "flabebe":
+                pokemon = PokemonBuilder.builder()
+                        .species(669)
+                        .build();
+                break;
+
+            case "typenull":
+            case "type null":
+            case "type:null":
+            case "type: null":
+                pokemon = PokemonBuilder.builder()
+                        .species(772)
+                        .build();
+                break;
+
+            case "tapu koko":
+            case "tapukoko":
+                pokemon = PokemonBuilder.builder()
+                        .species(785)
+                        .build();
+                break;
+
+            case "tapu lele":
+            case "tapulele":
+                pokemon = PokemonBuilder.builder()
+                        .species(786)
+                        .build();
+                break;
+
+            case "tapu bulu":
+            case "tapubulu":
+                pokemon = PokemonBuilder.builder()
+                        .species(787)
+                        .build();
+                break;
+
+            case "tapu fini":
+            case "tapufini":
+                pokemon = PokemonBuilder.builder()
+                        .species(788)
+                        .build();
+                break;
+
+            case "sirfetchd":
+            case "sirfetch'd":
+                pokemon = PokemonBuilder.builder()
+                        .species(865)
+                        .build();
+                break;
+
+            case "great tusk":
+            case "greattusk":
+                pokemon = PokemonBuilder.builder()
+                        .species(984)
+                        .build();
+                break;
+
+            case "scream tail":
+            case "screamtail":
+                pokemon = PokemonBuilder.builder()
+                        .species(985)
+                        .build();
+                break;
+
+            case "brute bonnet":
+            case "brutebonnet":
+                pokemon = PokemonBuilder.builder()
+                        .species(986)
+                        .build();
+                break;
+
+            case "flutter mane":
+            case "fluttermane":
+                pokemon = PokemonBuilder.builder()
+                        .species(987)
+                        .build();
+                break;
+
+            case "slither wing":
+            case "slitherwing":
+                pokemon = PokemonBuilder.builder()
+                        .species(988)
+                        .build();
+                break;
+
+            case "sandy shocks":
+            case "sandyshocks":
+                pokemon = PokemonBuilder.builder()
+                        .species(989)
+                        .build();
+                break;
+
+            case "iron treads":
+            case "irontreads":
+                pokemon = PokemonBuilder.builder()
+                        .species(990)
+                        .build();
+                break;
+
+            case "iron bundle":
+            case "ironbundle":
+                pokemon = PokemonBuilder.builder()
+                        .species(991)
+                        .build();
+                break;
+
+            case "iron hands":
+            case "ironhands":
+                pokemon = PokemonBuilder.builder()
+                        .species(992)
+                        .build();
+                break;
+
+            case "iron jugulis":
+            case "ironjugulis":
+                pokemon = PokemonBuilder.builder()
+                        .species(993)
+                        .build();
+                break;
+
+            case "iron moth":
+            case "ironmoth":
+                pokemon = PokemonBuilder.builder()
+                        .species(994)
+                        .build();
+                break;
+
+            case "iron thorns":
+            case "ironthorns":
+                pokemon = PokemonBuilder.builder()
+                        .species(995)
+                        .build();
+                break;
+
+            case "wo-chien":
+            case "wo chien":
+                pokemon = PokemonBuilder.builder()
+                        .species(1001)
+                        .build();
+                break;
+
+            case "chien-pao":
+            case "chien pao":
+                pokemon = PokemonBuilder.builder()
+                        .species(1002)
+                        .build();
+                break;
+
+            case "ting-lu":
+            case "ting lu":
+                pokemon = PokemonBuilder.builder()
+                        .species(1003)
+                        .build();
+                break;
+
+            case "chi-yu":
+            case "chi yu":
+                pokemon = PokemonBuilder.builder()
+                        .species(1004)
+                        .build();
+                break;
+
+            case "roaring moon":
+            case "roaringmoon":
+                pokemon = PokemonBuilder.builder()
+                        .species(1005)
+                        .build();
+                break;
+
+            case "iron valiant":
+            case "ironvaliant":
+                pokemon = PokemonBuilder.builder()
+                        .species(1006)
+                        .build();
+                break;
+
+            case "walking wake":
+            case "walkingwake":
+                pokemon = PokemonBuilder.builder()
+                        .species(1009)
+                        .build();
+                break;
+
+            case "iron leaves":
+            case "ironleaves":
+                pokemon = PokemonBuilder.builder()
+                        .species(1010)
+                        .build();
+                break;
+
+            case "gouging fire":
+            case "gougingfire":
+                pokemon = PokemonBuilder.builder()
+                        .species(1020)
+                        .build();
+                break;
+
+            case "raging bolt":
+            case "ragingbolt":
+                pokemon = PokemonBuilder.builder()
+                        .species(1021)
+                        .build();
+                break;
+
+            case "iron boulder":
+            case "ironboulder":
+                pokemon = PokemonBuilder.builder()
+                        .species(1022)
+                        .build();
+                break;
+
+            case "iron crown":
+            case "ironcrown":
+                pokemon = PokemonBuilder.builder()
+                        .species(1023)
+                        .build();
+                break;
+
+        }
+
+        if (pokemon == null) {
+
+            pokemon = PokemonBuilder.builder()
+                    .species(species)
+                    .build();
+
+        }
+
+        return pokemon;
+
+    }
+
     public static Pokemon rebuildPokemon (String species, List<String> specs) {
 
-        Pokemon pokemon = PokemonBuilder.builder()
-                .species(species.replace("pixelmon.", ""))
-                .build();
+        Pokemon pokemon = rebuildPokemonWithStupidAssName(species);
 
         for (String s : specs) {
 
@@ -99,6 +390,14 @@ public class Utils {
 
                     }
                     switch (pokemonSpec.toLowerCase()) {
+
+                        case "times cloned":
+                            pokemon.getPersistentData().putInt("NumCloned", Integer.parseInt(value));
+                            break;
+
+                        case "enchants":
+                            pokemon.getPersistentData().putInt("NumEnchanted", Integer.parseInt(value));
+                            break;
 
                         case "shiny":
                             pokemon.setShiny(Boolean.parseBoolean(value));

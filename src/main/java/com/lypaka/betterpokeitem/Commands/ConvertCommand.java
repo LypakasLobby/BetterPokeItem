@@ -9,6 +9,8 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
+import com.pixelmonmod.pixelmon.api.pokemon.stats.extraStats.LakeTrioStats;
+import com.pixelmonmod.pixelmon.api.pokemon.stats.extraStats.MewStats;
 import com.pixelmonmod.pixelmon.api.storage.PlayerPartyStorage;
 import com.pixelmonmod.pixelmon.api.storage.StorageProxy;
 import com.pixelmonmod.pixelmon.api.util.helpers.SpriteItemHelper;
@@ -154,39 +156,102 @@ public class ConvertCommand {
                                                                                     }
 
                                                                                     ListNBT lore = new ListNBT();
-                                                                                    for (String s : ConfigGetters.itemStackLore) {
+                                                                                    if (pokemon.getSpecies().getName().equalsIgnoreCase("Mew")) {
 
-                                                                                        lore.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(FancyText.getFormattedText(s
-                                                                                                .replace("%shiny%", String.valueOf(pokemon.isShiny()))
-                                                                                                .replace("%level%", String.valueOf(pokemon.getPokemonLevel()))
-                                                                                                .replace("%nature%", pokemon.getNature().getLocalizedName())
-                                                                                                .replace("%ability%", pokemon.getAbilityName())
-                                                                                                .replace("%growth%", pokemon.getGrowth().getLocalizedName())
-                                                                                                .replace("%gender%", pokemon.getGender().getLocalizedName())
-                                                                                                .replace("%moves%", moves)
-                                                                                                .replace("%ivs%", ivs)
-                                                                                                .replace("%ivPercent%", ivPercent)
-                                                                                                .replace("%evs%", evs)
-                                                                                                .replace("%form%", form)
-                                                                                                .replace("%palette%", palette)
-                                                                                                .replace("%nickname%", nickname)
-                                                                                                .replace("%ot%", ot)
-                                                                                                .replace("%otuuid%", otUUID)
-                                                                                                .replace("%isEgg%", String.valueOf(pokemon.isEgg()))
-                                                                                                .replace("%friendship%", String.valueOf(pokemon.getFriendship()))
-                                                                                                .replace("%current%", currentHP)
-                                                                                                .replace("%max%", maxHP)
-                                                                                                .replace("%heldItem%", heldItem)
-                                                                                                .replace("%gmax%", gmax)
-                                                                                                .replace("%currentEXP%", currentEXP)
-                                                                                                .replace("%neededEXP%", neededEXP)
-                                                                                                .replace("%mintNature%", mintNature)
-                                                                                                .replace("%dynamaxLevel%", dynamaxLevel)
-                                                                                                .replace("%mythic%", mythic)
-                                                                                                .replace("%teratype%", teraType)
-                                                                                        ))));
+                                                                                        int cloned = ((MewStats) pokemon.getExtraStats()).numCloned;
+                                                                                        for (String s : ConfigGetters.itemStackLore) {
+
+                                                                                            lore.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(FancyText.getFormattedText(s
+                                                                                                    .replace("%shiny%", String.valueOf(pokemon.isShiny()))
+                                                                                                    .replace("%level%", String.valueOf(pokemon.getPokemonLevel()))
+                                                                                                    .replace("%nature%", pokemon.getNature().getLocalizedName())
+                                                                                                    .replace("%ability%", pokemon.getAbilityName())
+                                                                                                    .replace("%growth%", pokemon.getGrowth().getLocalizedName())
+                                                                                                    .replace("%gender%", pokemon.getGender().getLocalizedName())
+                                                                                                    .replace("%moves%", moves)
+                                                                                                    .replace("%ivs%", ivs)
+                                                                                                    .replace("%ivPercent%", ivPercent)
+                                                                                                    .replace("%evs%", evs)
+                                                                                                    .replace("%form%", form)
+                                                                                                    .replace("%palette%", palette)
+                                                                                                    .replace("%nickname%", nickname)
+                                                                                                    .replace("%ot%", ot)
+                                                                                                    .replace("%otuuid%", otUUID)
+                                                                                                    .replace("%isEgg%", String.valueOf(pokemon.isEgg()))
+                                                                                                    .replace("%friendship%", String.valueOf(pokemon.getFriendship()))
+                                                                                                    .replace("%current%", currentHP)
+                                                                                                    .replace("%max%", maxHP)
+                                                                                                    .replace("%heldItem%", heldItem)
+                                                                                                    .replace("%gmax%", gmax)
+                                                                                                    .replace("%currentEXP%", currentEXP)
+                                                                                                    .replace("%neededEXP%", neededEXP)
+                                                                                                    .replace("%mintNature%", mintNature)
+                                                                                                    .replace("%dynamaxLevel%", dynamaxLevel)
+                                                                                                    .replace("%mythic%", mythic)
+                                                                                                    .replace("%teratype%", teraType)
+                                                                                                    .replace("%numCloned%", String.valueOf(cloned))
+                                                                                            ))));
+
+                                                                                        }
+
+                                                                                    } else {
+
+                                                                                        ConfigGetters.itemStackLore.removeIf(e -> e.contains("%numCloned%"));
 
                                                                                     }
+                                                                                    if (pokemon.getSpecies().getName().equalsIgnoreCase("Mesprit") || pokemon.getSpecies().getName().equalsIgnoreCase("Azelf") || pokemon.getSpecies().getName().equalsIgnoreCase("Uxie")) {
+
+                                                                                        int enchants = ((LakeTrioStats) pokemon.getExtraStats()).numEnchanted;
+                                                                                        for (String s : ConfigGetters.itemStackLore) {
+
+                                                                                            lore.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(FancyText.getFormattedText(s
+                                                                                                    .replace("%shiny%", String.valueOf(pokemon.isShiny()))
+                                                                                                    .replace("%level%", String.valueOf(pokemon.getPokemonLevel()))
+                                                                                                    .replace("%nature%", pokemon.getNature().getLocalizedName())
+                                                                                                    .replace("%ability%", pokemon.getAbilityName())
+                                                                                                    .replace("%growth%", pokemon.getGrowth().getLocalizedName())
+                                                                                                    .replace("%gender%", pokemon.getGender().getLocalizedName())
+                                                                                                    .replace("%moves%", moves)
+                                                                                                    .replace("%ivs%", ivs)
+                                                                                                    .replace("%ivPercent%", ivPercent)
+                                                                                                    .replace("%evs%", evs)
+                                                                                                    .replace("%form%", form)
+                                                                                                    .replace("%palette%", palette)
+                                                                                                    .replace("%nickname%", nickname)
+                                                                                                    .replace("%ot%", ot)
+                                                                                                    .replace("%otuuid%", otUUID)
+                                                                                                    .replace("%isEgg%", String.valueOf(pokemon.isEgg()))
+                                                                                                    .replace("%friendship%", String.valueOf(pokemon.getFriendship()))
+                                                                                                    .replace("%current%", currentHP)
+                                                                                                    .replace("%max%", maxHP)
+                                                                                                    .replace("%heldItem%", heldItem)
+                                                                                                    .replace("%gmax%", gmax)
+                                                                                                    .replace("%currentEXP%", currentEXP)
+                                                                                                    .replace("%neededEXP%", neededEXP)
+                                                                                                    .replace("%mintNature%", mintNature)
+                                                                                                    .replace("%dynamaxLevel%", dynamaxLevel)
+                                                                                                    .replace("%mythic%", mythic)
+                                                                                                    .replace("%teratype%", teraType)
+                                                                                                    .replace("%enchants%", String.valueOf(enchants))
+                                                                                            ))));
+
+                                                                                        }
+
+                                                                                    } else {
+
+                                                                                        ConfigGetters.itemStackLore.removeIf(e -> e.contains("%enchants%"));
+
+                                                                                    }
+
+                                                                                    // just as a safety measure
+                                                                                    String pokemonName = pokemon.getSpecies().getName();
+                                                                                    if (!pokemonName.equalsIgnoreCase("Mew") && !pokemonName.equalsIgnoreCase("Azelf") && !pokemonName.equalsIgnoreCase("Mesprit") && !pokemonName.equalsIgnoreCase("Uxie")) {
+
+                                                                                        ConfigGetters.itemStackLore.removeIf(e -> e.contains("%enchants%"));
+                                                                                        ConfigGetters.itemStackLore.removeIf(e -> e.contains("%numCloned%"));
+
+                                                                                    }
+
 
                                                                                     if (lock) {
 
@@ -323,37 +388,99 @@ public class ConvertCommand {
                                                                     }
 
                                                                     ListNBT lore = new ListNBT();
-                                                                    for (String s : ConfigGetters.itemStackLore) {
+                                                                    if (pokemon.getSpecies().getName().equalsIgnoreCase("Mew")) {
 
-                                                                        lore.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(FancyText.getFormattedText(s
-                                                                                .replace("%shiny%", String.valueOf(pokemon.isShiny()))
-                                                                                .replace("%level%", String.valueOf(pokemon.getPokemonLevel()))
-                                                                                .replace("%nature%", pokemon.getNature().getLocalizedName())
-                                                                                .replace("%ability%", pokemon.getAbilityName())
-                                                                                .replace("%growth%", pokemon.getGrowth().getLocalizedName())
-                                                                                .replace("%gender%", pokemon.getGender().getLocalizedName())
-                                                                                .replace("%moves%", moves)
-                                                                                .replace("%ivs%", ivs)
-                                                                                .replace("%ivPercent%", ivPercent)
-                                                                                .replace("%evs%", evs)
-                                                                                .replace("%form%", form)
-                                                                                .replace("%palette%", palette)
-                                                                                .replace("%nickname%", nickname)
-                                                                                .replace("%ot%", ot)
-                                                                                .replace("%otuuid%", otUUID)
-                                                                                .replace("%isEgg%", String.valueOf(pokemon.isEgg()))
-                                                                                .replace("%friendship%", String.valueOf(pokemon.getFriendship()))
-                                                                                .replace("%current%", currentHP)
-                                                                                .replace("%max%", maxHP)
-                                                                                .replace("%heldItem%", heldItem)
-                                                                                .replace("%gmax%", gmax)
-                                                                                .replace("%currentEXP%", currentEXP)
-                                                                                .replace("%neededEXP%", neededEXP)
-                                                                                .replace("%mintNature%", mintNature)
-                                                                                .replace("%dynamaxLevel%", dynamaxLevel)
-                                                                                .replace("%mythic%", mythic)
-                                                                                .replace("%teratype%", teraType)
-                                                                        ))));
+                                                                        int cloned = ((MewStats) pokemon.getExtraStats()).numCloned;
+                                                                        for (String s : ConfigGetters.itemStackLore) {
+
+                                                                            lore.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(FancyText.getFormattedText(s
+                                                                                    .replace("%shiny%", String.valueOf(pokemon.isShiny()))
+                                                                                    .replace("%level%", String.valueOf(pokemon.getPokemonLevel()))
+                                                                                    .replace("%nature%", pokemon.getNature().getLocalizedName())
+                                                                                    .replace("%ability%", pokemon.getAbilityName())
+                                                                                    .replace("%growth%", pokemon.getGrowth().getLocalizedName())
+                                                                                    .replace("%gender%", pokemon.getGender().getLocalizedName())
+                                                                                    .replace("%moves%", moves)
+                                                                                    .replace("%ivs%", ivs)
+                                                                                    .replace("%ivPercent%", ivPercent)
+                                                                                    .replace("%evs%", evs)
+                                                                                    .replace("%form%", form)
+                                                                                    .replace("%palette%", palette)
+                                                                                    .replace("%nickname%", nickname)
+                                                                                    .replace("%ot%", ot)
+                                                                                    .replace("%otuuid%", otUUID)
+                                                                                    .replace("%isEgg%", String.valueOf(pokemon.isEgg()))
+                                                                                    .replace("%friendship%", String.valueOf(pokemon.getFriendship()))
+                                                                                    .replace("%current%", currentHP)
+                                                                                    .replace("%max%", maxHP)
+                                                                                    .replace("%heldItem%", heldItem)
+                                                                                    .replace("%gmax%", gmax)
+                                                                                    .replace("%currentEXP%", currentEXP)
+                                                                                    .replace("%neededEXP%", neededEXP)
+                                                                                    .replace("%mintNature%", mintNature)
+                                                                                    .replace("%dynamaxLevel%", dynamaxLevel)
+                                                                                    .replace("%mythic%", mythic)
+                                                                                    .replace("%teratype%", teraType)
+                                                                                    .replace("%numCloned%", String.valueOf(cloned))
+                                                                            ))));
+
+                                                                        }
+
+                                                                    } else {
+
+                                                                        ConfigGetters.itemStackLore.removeIf(e -> e.contains("%numCloned%"));
+
+                                                                    }
+                                                                    if (pokemon.getSpecies().getName().equalsIgnoreCase("Mesprit") || pokemon.getSpecies().getName().equalsIgnoreCase("Azelf") || pokemon.getSpecies().getName().equalsIgnoreCase("Uxie")) {
+
+                                                                        int enchants = ((LakeTrioStats) pokemon.getExtraStats()).numEnchanted;
+                                                                        for (String s : ConfigGetters.itemStackLore) {
+
+                                                                            lore.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(FancyText.getFormattedText(s
+                                                                                    .replace("%shiny%", String.valueOf(pokemon.isShiny()))
+                                                                                    .replace("%level%", String.valueOf(pokemon.getPokemonLevel()))
+                                                                                    .replace("%nature%", pokemon.getNature().getLocalizedName())
+                                                                                    .replace("%ability%", pokemon.getAbilityName())
+                                                                                    .replace("%growth%", pokemon.getGrowth().getLocalizedName())
+                                                                                    .replace("%gender%", pokemon.getGender().getLocalizedName())
+                                                                                    .replace("%moves%", moves)
+                                                                                    .replace("%ivs%", ivs)
+                                                                                    .replace("%ivPercent%", ivPercent)
+                                                                                    .replace("%evs%", evs)
+                                                                                    .replace("%form%", form)
+                                                                                    .replace("%palette%", palette)
+                                                                                    .replace("%nickname%", nickname)
+                                                                                    .replace("%ot%", ot)
+                                                                                    .replace("%otuuid%", otUUID)
+                                                                                    .replace("%isEgg%", String.valueOf(pokemon.isEgg()))
+                                                                                    .replace("%friendship%", String.valueOf(pokemon.getFriendship()))
+                                                                                    .replace("%current%", currentHP)
+                                                                                    .replace("%max%", maxHP)
+                                                                                    .replace("%heldItem%", heldItem)
+                                                                                    .replace("%gmax%", gmax)
+                                                                                    .replace("%currentEXP%", currentEXP)
+                                                                                    .replace("%neededEXP%", neededEXP)
+                                                                                    .replace("%mintNature%", mintNature)
+                                                                                    .replace("%dynamaxLevel%", dynamaxLevel)
+                                                                                    .replace("%mythic%", mythic)
+                                                                                    .replace("%teratype%", teraType)
+                                                                                    .replace("%enchants%", String.valueOf(enchants))
+                                                                            ))));
+
+                                                                        }
+
+                                                                    } else {
+
+                                                                        ConfigGetters.itemStackLore.removeIf(e -> e.contains("%enchants%"));
+
+                                                                    }
+
+                                                                    // just as a safety measure
+                                                                    String pokemonName = pokemon.getSpecies().getName();
+                                                                    if (!pokemonName.equalsIgnoreCase("Mew") && !pokemonName.equalsIgnoreCase("Azelf") && !pokemonName.equalsIgnoreCase("Mesprit") && !pokemonName.equalsIgnoreCase("Uxie")) {
+
+                                                                        ConfigGetters.itemStackLore.removeIf(e -> e.contains("%enchants%"));
+                                                                        ConfigGetters.itemStackLore.removeIf(e -> e.contains("%numCloned%"));
 
                                                                     }
 
