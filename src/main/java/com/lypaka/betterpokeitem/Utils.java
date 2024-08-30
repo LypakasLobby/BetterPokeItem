@@ -7,6 +7,7 @@ import com.lypaka.pokemonmythology.Handlers.MythicHandler;
 import com.pixelmonmod.pixelmon.api.pokemon.Nature;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.pokemon.PokemonBuilder;
+import com.pixelmonmod.pixelmon.api.pokemon.PokemonFactory;
 import com.pixelmonmod.pixelmon.api.pokemon.ability.AbilityRegistry;
 import com.pixelmonmod.pixelmon.api.pokemon.species.gender.Gender;
 import com.pixelmonmod.pixelmon.api.pokemon.stats.extraStats.LakeTrioStats;
@@ -14,6 +15,7 @@ import com.pixelmonmod.pixelmon.api.registries.PixelmonSpecies;
 import com.pixelmonmod.pixelmon.battles.attacks.Attack;
 import com.pixelmonmod.pixelmon.enums.EnumGrowth;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.fml.ModList;
 
 import java.util.List;
@@ -314,11 +316,33 @@ public class Utils {
 
     }
 
-    public static Pokemon rebuildPokemon (String species, List<String> specs) {
+    public static Pokemon rebuildPokemon (CompoundNBT nbt, String teraType, String mythic) {
 
-        Pokemon pokemon = rebuildPokemonWithStupidAssName(species);
+        //Pokemon pokemon = rebuildPokemonWithStupidAssName(species);
+        Pokemon pokemon = PokemonFactory.create(nbt);
 
-        for (String s : specs) {
+        if (teraType != null) {
+
+            if (ModList.get().isLoaded("catalystterapokemon")) {
+
+                NBTHelpers.setTeraType(pokemon, teraType, false);
+
+            }
+
+        }
+
+        if (mythic != null) {
+
+            if (ModList.get().isLoaded("pokemonmythology")) {
+
+                MythicHandler.setMythic(pokemon, MythicHandler.getFromName(mythic), false);
+
+            }
+
+        }
+        return pokemon;
+
+        /*for (String s : specs) {
 
             // This is incredibly fucking stupid
             s = s.replace("§0", "").replace("§1", "").replace("§2", "").replace("§3", "")
@@ -601,7 +625,7 @@ public class Utils {
         }
 
         pokemon.setOriginalTrainer(otUUID, ot);
-        return pokemon;
+        return pokemon;*/
 
     }
 

@@ -7,6 +7,7 @@ import com.pixelmonmod.pixelmon.api.storage.PlayerPartyStorage;
 import com.pixelmonmod.pixelmon.api.storage.StorageProxy;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Hand;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -52,10 +53,16 @@ public class InteractionListener {
 
                     }
 
-                    Pokemon pokemon = Utils.rebuildPokemon(species, specs);
+                    CompoundNBT nbt = item.getOrCreateChildTag("PokemonData");
+                    String teraType = null;
+                    if (item.getOrCreateTag().contains("TeraType")) teraType = item.getOrCreateTag().getString("TeraType");
+                    String mythic = null;
+                    if (item.getOrCreateTag().contains("Mythic")) mythic = item.getOrCreateTag().getString("Mythic");
+                    Pokemon pokemon = Utils.rebuildPokemon(nbt, teraType, mythic);
                     player.getHeldItem(Hand.MAIN_HAND).setCount(player.getHeldItem(Hand.MAIN_HAND).getCount() - 1);
                     PlayerPartyStorage storage = StorageProxy.getParty(player);
                     storage.add(pokemon);
+                    BetterPokeItem.logger.info(player.getName().getString() + " un-itemized a " + pokemon.getLocalizedName() + "!");
                     player.sendMessage(FancyText.getFormattedText("&aYou've un-itemized your " + pokemon.getLocalizedName() + "!"), player.getUniqueID());
 
                 }
@@ -74,10 +81,16 @@ public class InteractionListener {
 
                 }
 
-                Pokemon pokemon = Utils.rebuildPokemon(species, specs);
+                CompoundNBT nbt = item.getOrCreateChildTag("PokemonData");
+                String teraType = null;
+                if (item.getOrCreateTag().contains("TeraType")) teraType = item.getOrCreateTag().getString("TeraType");
+                String mythic = null;
+                if (item.getOrCreateTag().contains("Mythic")) mythic = item.getOrCreateTag().getString("Mythic");
+                Pokemon pokemon = Utils.rebuildPokemon(nbt, teraType, mythic);
                 player.getHeldItem(Hand.MAIN_HAND).setCount(player.getHeldItem(Hand.MAIN_HAND).getCount() - 1);
                 PlayerPartyStorage storage = StorageProxy.getParty(player);
                 storage.add(pokemon);
+                BetterPokeItem.logger.info(player.getName().getString() + " un-itemized a " + pokemon.getLocalizedName() + "!");
                 player.sendMessage(FancyText.getFormattedText("&aYou've un-itemized your " + pokemon.getLocalizedName() + "!"), player.getUniqueID());
 
             }

@@ -19,6 +19,7 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.text.ITextComponent;
@@ -144,6 +145,7 @@ public class ConvertCommand {
                                                                                         if (MythicHandler.isPokemonMythic(pokemon)) {
 
                                                                                             mythic = MythicHandler.getMythicFromPokemon(pokemon).getName();
+                                                                                            sprite.getOrCreateTag().putString("Mythic", mythic);
 
                                                                                         }
 
@@ -152,6 +154,7 @@ public class ConvertCommand {
                                                                                     if (ModList.get().isLoaded("catalystterapokemon")) {
 
                                                                                         teraType = NBTHelpers.getTeraType(pokemon);
+                                                                                        sprite.getOrCreateTag().putString("TeraType", teraType);
 
                                                                                     }
 
@@ -260,8 +263,9 @@ public class ConvertCommand {
 
                                                                                     }
 
+                                                                                    sprite.getOrCreateTag().put("PokemonData", pokemon.writeToNBT(new CompoundNBT()));
                                                                                     sprite.getOrCreateTag().putBoolean("IsPokeItem", true);
-                                                                                    sprite.getOrCreateChildTag("display").put("Lore", lore);
+                                                                                    sprite.getOrCreateChildTag("display").put("Lore", lore); // TODO Fix this, is broken now?
                                                                                     player.addItemStackToInventory(sprite);
                                                                                     storage.set(slot, null);
                                                                                     player.sendMessage(FancyText.getFormattedText("&aSuccessfully itemized your " + pokemon.getLocalizedName() + "!"), player.getUniqueID());
@@ -326,6 +330,7 @@ public class ConvertCommand {
                                                                     Attack a2 = pokemon.getMoveset().get(1);
                                                                     Attack a3 = pokemon.getMoveset().get(2);
                                                                     Attack a4 = pokemon.getMoveset().get(3);
+                                                                    //System.out.println(pokemon.getPersistentData());
                                                                     String attack1 = a1 == null ? "None" : a1.getActualMove().getAttackName();
                                                                     String attack2 = a2 == null ? "None" : a2.getActualMove().getAttackName();
                                                                     String attack3 = a3 == null ? "None" : a3.getActualMove().getAttackName();
@@ -376,6 +381,7 @@ public class ConvertCommand {
                                                                         if (MythicHandler.isPokemonMythic(pokemon)) {
 
                                                                             mythic = MythicHandler.getMythicFromPokemon(pokemon).getName();
+                                                                            sprite.getOrCreateTag().putString("Mythic", mythic);
 
                                                                         }
 
@@ -384,6 +390,7 @@ public class ConvertCommand {
                                                                     if (ModList.get().isLoaded("catalystterapokemon")) {
 
                                                                         teraType = NBTHelpers.getTeraType(pokemon);
+                                                                        sprite.getOrCreateTag().putString("TeraType", teraType);
 
                                                                     }
 
@@ -484,8 +491,9 @@ public class ConvertCommand {
 
                                                                     }
 
+                                                                    sprite.getOrCreateTag().put("PokemonData", pokemon.writeToNBT(new CompoundNBT()));
                                                                     sprite.getOrCreateTag().putBoolean("IsPokeItem", true);
-                                                                    sprite.getOrCreateChildTag("display").put("Lore", lore);
+                                                                    sprite.getOrCreateChildTag("display").put("Lore", lore); // TODO Fix this, is broken now?
                                                                     player.addItemStackToInventory(sprite);
                                                                     storage.set(slot, null);
                                                                     player.sendMessage(FancyText.getFormattedText("&aSuccessfully itemized your " + pokemon.getLocalizedName() + "!"), player.getUniqueID());
