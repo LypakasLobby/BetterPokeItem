@@ -1,28 +1,128 @@
 package com.lypaka.betterpokeitem;
 
-import com.lypaka.catalystterapokemon.Helpers.NBTHelpers;
 import com.lypaka.lypakautils.FancyText;
-import com.lypaka.lypakautils.MiscHandlers.ItemStackBuilder;
-import com.lypaka.pokemonmythology.Handlers.MythicHandler;
-import com.pixelmonmod.pixelmon.api.pokemon.Nature;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.pokemon.PokemonBuilder;
 import com.pixelmonmod.pixelmon.api.pokemon.PokemonFactory;
-import com.pixelmonmod.pixelmon.api.pokemon.ability.AbilityRegistry;
-import com.pixelmonmod.pixelmon.api.pokemon.species.gender.Gender;
-import com.pixelmonmod.pixelmon.api.pokemon.stats.extraStats.LakeTrioStats;
-import com.pixelmonmod.pixelmon.api.registries.PixelmonSpecies;
+import com.pixelmonmod.pixelmon.api.util.helpers.SpriteItemHelper;
 import com.pixelmonmod.pixelmon.battles.attacks.Attack;
-import com.pixelmonmod.pixelmon.enums.EnumGrowth;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraftforge.fml.ModList;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.StringNBT;
+import net.minecraft.util.text.ITextComponent;
 
-import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public class Utils {
+
+    public static ItemStack buildItem (Pokemon pokemon, ServerPlayerEntity owner, boolean lock) {
+
+        ItemStack sprite = SpriteItemHelper.getPhoto(pokemon);
+
+        // Custom species support
+        String name = pokemon.getSpecies().getName().replace("pixelmon.", "");
+        name = name.substring(0, 1).toUpperCase() + name.substring(1);
+        sprite.setDisplayName(FancyText.getFormattedText("&e" + name));
+
+        Attack a1 = pokemon.getMoveset().get(0);
+        Attack a2 = pokemon.getMoveset().get(1);
+        Attack a3 = pokemon.getMoveset().get(2);
+        Attack a4 = pokemon.getMoveset().get(3);
+        String attack1 = a1 == null ? "None" : a1.getActualMove().getAttackName();
+        String attack2 = a2 == null ? "None" : a2.getActualMove().getAttackName();
+        String attack3 = a3 == null ? "None" : a3.getActualMove().getAttackName();
+        String attack4 = a4 == null ? "None" : a4.getActualMove().getAttackName();
+        String moves = attack1 + ", " + attack2 + ", " + attack3 + ", " + attack4;
+
+        int ivHP = pokemon.getIVs().getArray()[0];
+        int ivAtk = pokemon.getIVs().getArray()[1];
+        int ivDef = pokemon.getIVs().getArray()[2];
+        int ivSpAtk = pokemon.getIVs().getArray()[3];
+        int ivSpDef = pokemon.getIVs().getArray()[4];
+        int ivSpeed = pokemon.getIVs().getArray()[5];
+        String ivs = ivHP + ", " + ivAtk + ", " + ivDef + ", " + ivSpAtk + ", " + ivSpDef + ", " + ivSpeed;
+        String ivPercent = pokemon.getIVs().getPercentageString(2);
+
+        int evHP = pokemon.getEVs().getArray()[0];
+        int evAtk = pokemon.getEVs().getArray()[1];
+        int evDef = pokemon.getEVs().getArray()[2];
+        int evSpAtk = pokemon.getEVs().getArray()[3];
+        int evSpDef = pokemon.getEVs().getArray()[4];
+        int evSpeed = pokemon.getEVs().getArray()[5];
+        String evs = evHP + ", " + evAtk + ", " + evDef + ", " + evSpAtk + ", " + evSpDef + ", " + evSpeed;
+
+        String form = pokemon.getForm().getLocalizedName();
+        String palette = pokemon.getPalette().getName();
+        String nickname = pokemon.getFormattedNickname().getString();
+        String ot = pokemon.getOriginalTrainer() == null ? "None" : pokemon.getOriginalTrainer();
+        String otUUID = pokemon.getOriginalTrainerUUID() == null ? "None" : pokemon.getOriginalTrainerUUID().toString();
+
+        String currentHP = String.valueOf(pokemon.getHealth());
+        String maxHP = String.valueOf(pokemon.getMaxHealth());
+        String heldItem = pokemon.getHeldItem().getItem().getRegistryName().toString();
+        if (heldItem.equalsIgnoreCase("minecraft:air")) {
+
+            heldItem = "none";
+
+        }
+
+        String mintNature = pokemon.getMintNature() == null ? "none" : pokemon.getMintNature().getString();
+        String gmax = String.valueOf(pokemon.hasGigantamaxFactor());
+        String currentEXP = String.valueOf(pokemon.getExperience());
+        String neededEXP = String.valueOf(pokemon.getExperienceToLevelUp());
+        String dynamaxLevel = String.valueOf(pokemon.getDynamaxLevel());
+
+        ListNBT lore = new ListNBT();
+        for (String s : ConfigGetters.itemStackLore) {
+
+            lore.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(FancyText.getFormattedText(s
+                    .replace("%shiny%", String.valueOf(pokemon.isShiny()))
+                    .replace("%level%", String.valueOf(pokemon.getPokemonLevel()))
+                    .replace("%nature%", pokemon.getNature().getLocalizedName())
+                    .replace("%ability%", pokemon.getAbilityName())
+                    .replace("%growth%", pokemon.getGrowth().getLocalizedName())
+                    .replace("%gender%", pokemon.getGender().getLocalizedName())
+                    .replace("%moves%", moves)
+                    .replace("%ivs%", ivs)
+                    .replace("%ivPercent%", ivPercent)
+                    .replace("%evs%", evs)
+                    .replace("%form%", form)
+                    .replace("%palette%", palette)
+                    .replace("%nickname%", nickname)
+                    .replace("%ot%", ot)
+                    .replace("%otuuid%", otUUID)
+                    .replace("%isEgg%", String.valueOf(pokemon.isEgg()))
+                    .replace("%friendship%", String.valueOf(pokemon.getFriendship()))
+                    .replace("%current%", currentHP)
+                    .replace("%max%", maxHP)
+                    .replace("%heldItem%", heldItem)
+                    .replace("%gmax%", gmax)
+                    .replace("%currentEXP%", currentEXP)
+                    .replace("%neededEXP%", neededEXP)
+                    .replace("%mintNature%", mintNature)
+                    .replace("%dynamaxLevel%", dynamaxLevel)
+            ))));
+
+        }
+        if (lock) {
+
+            lore.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(FancyText.getFormattedText(""))));
+            lore.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(FancyText.getFormattedText("&dLocked By: &e" + owner.getName().getString() + " / " + owner.getUniqueID()))));
+
+        }
+
+        sprite.getOrCreateTag().put("PokemonData", pokemon.writeToNBT(new CompoundNBT()));
+        sprite.getOrCreateTag().putBoolean("IsPokeItem", true);
+        sprite.getOrCreateChildTag("display").put("Lore", lore); // TODO Fix this, is broken now?
+
+       // BetterPokeItem.logger.info("Logging ItemStack NBT:");
+        //BetterPokeItem.logger.info(sprite.getOrCreateTag());
+
+        return sprite;
+
+    }
 
     private static Pokemon rebuildPokemonWithStupidAssName (String species) {
 
@@ -321,7 +421,7 @@ public class Utils {
         //Pokemon pokemon = rebuildPokemonWithStupidAssName(species);
         Pokemon pokemon = PokemonFactory.create(nbt);
 
-        if (teraType != null) {
+       /* if (teraType != null) {
 
             if (ModList.get().isLoaded("catalystterapokemon")) {
 
@@ -339,7 +439,7 @@ public class Utils {
 
             }
 
-        }
+        }*/
         return pokemon;
 
         /*for (String s : specs) {

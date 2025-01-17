@@ -1,11 +1,9 @@
 Java Launcher: C:\Users\ryan9\.gradle\jdks\adoptium-8-x64-hotspot-windows\bin\java.exe
-Arguments: '--in-jar, C:\Users\ryan9\Documents\GitHub\BetterPokeItem\build\libs\BetterPokeItem-1.16.5-2.0.0-EXPERIMENTAL2.jar, --out-jar, C:\Users\ryan9\Documents\GitHub\BetterPokeItem\build\reobfJar\output.jar, --srg-in, C:\Users\ryan9\Documents\GitHub\BetterPokeItem\build\createMcpToSrg\output.tsrg, --live'
+Arguments: '--in-jar, C:\Users\ryan9\Documents\GitHub\BetterPokeItem\build\libs\BetterPokeItem-1.16.5-2.0.0.jar, --out-jar, C:\Users\ryan9\Documents\GitHub\BetterPokeItem\build\reobfJar\output.jar, --srg-in, C:\Users\ryan9\Documents\GitHub\BetterPokeItem\build\createMcpToSrg\output.tsrg, --live'
 Classpath:
  - C:\Users\ryan9\.gradle\caches\forge_gradle\maven_downloader\net\md-5\SpecialSource\1.11.0\SpecialSource-1.11.0-shaded.jar
  - C:\Users\ryan9\Documents\GitHub\LIBRARIES\LypakaUtils-1.16.5.jar
  - C:\Users\ryan9\Documents\GitHub\LIBRARIES\Reforged.jar
- - C:\Users\ryan9\Documents\GitHub\LIBRARIES\PokemonMythology-1.16.5-2.0.0.jar
- - C:\Users\ryan9\Documents\GitHub\LIBRARIES\CatalystTeraPokemon-1.16.5-1.0.1.jar
  - C:\Users\ryan9\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.16.5-36.2.39_mapped_snapshot_20210309-1.16.5\forge-1.16.5-36.2.39_mapped_snapshot_20210309-1.16.5-recomp.jar
  - C:\Users\ryan9\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.16.5-36.2.39_mapped_snapshot_20210309-1.16.5\forge-1.16.5-36.2.39_mapped_snapshot_20210309-1.16.5-launcher.jar
  - C:\Users\ryan9\.gradle\caches\forge_gradle\minecraft_repo\versions\1.16.5\client-extra.jar
