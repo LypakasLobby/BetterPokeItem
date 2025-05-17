@@ -12,6 +12,7 @@ public class ConfigGetters {
     public static String commandPermission;
     public static List<String> itemStackLore;
     public static List<String> pokemonBlacklist;
+    public static boolean preventDexEntry;
     public static Map<String, String> translationMap;
 
     public static void load() throws ObjectMappingException {
@@ -20,6 +21,17 @@ public class ConfigGetters {
         commandPermission = BetterPokeItem.configManager.getConfigNode(0, "Command-Permission").getString();
         itemStackLore = BetterPokeItem.configManager.getConfigNode(0, "Lore").getList(TypeToken.of(String.class));
         pokemonBlacklist = BetterPokeItem.configManager.getConfigNode(0, "Pokemon-Blacklist").getList(TypeToken.of(String.class));
+        preventDexEntry = false;
+        if (BetterPokeItem.configManager.getConfigNode(0, "Prevent-Dex-Entry").isVirtual()) {
+
+            BetterPokeItem.configManager.getConfigNode(0, "Prevent-Dex-Entry").setValue(false);
+            save = true;
+
+        } else {
+
+            preventDexEntry = BetterPokeItem.configManager.getConfigNode(0, "Prevent-Dex-Entry").getBoolean();
+
+        }
         translationMap = new HashMap<>();
         if (!BetterPokeItem.configManager.getConfigNode(0, "Translations").isVirtual()) {
 
@@ -27,7 +39,7 @@ public class ConfigGetters {
 
         } else {
 
-            save = true;
+            if (!save) save = true;
             translationMap.put("Shiny", "Shiny");
             translationMap.put("Level", "Level");
             translationMap.put("Nature", "Nature");
